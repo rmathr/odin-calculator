@@ -12,12 +12,6 @@ let sumPressed;
 handleNumericButtons(numericButtons);
 handleOperatorButtons(operationsButtons);
 
-
-
-
-
-
-
 function handleNumericButtons (id){
     id.forEach( button => {
         button.addEventListener('click', 
@@ -39,24 +33,19 @@ function handleOperatorButtons (id){
             if (button.id == 'sum'){
                 console.log(`${button.id}`);  
                 if(result != '' && firstValue != ''){
-                    firstValue = +firstValue;
-                    //operator('sum', firstSavedValue, firstValue);
-                    result = operations.sum(result, firstValue);
+                    operator('sum');     
+                } else if(result != '' && firstValue == ''){
+                    result = result;
                     firstValue = '';
-                    displayNumber.textContent = `${result}`
-                    sumPressed = false;     
+                    operations[0].isPressed = false;
                 } else {
                     result = +firstValue;
                     firstValue = '';
-                    sumPressed = true; 
+                    operations[0].isPressed = true; 
                 }
             } else if (button.id == 'equal'){
-                    if(sumPressed === true){
-                    firstValue = +firstValue;
-                    result = operations.sum(result, firstValue);
-                    firstValue = '';
-                    displayNumber.textContent = `${result}`
-                    sumPressed = false;   
+                    if(operations[0].isPressed === true){
+                    operator('sum');  
                     }
             } else if (button.value == 'x') {
                 operator('x');
@@ -67,26 +56,60 @@ function handleOperatorButtons (id){
             }
         })
     })
-}
+};
 
 
 
+const operations = [{
+    id: 'sum',
+    isPressed: null,
+    sum(firstValue, secondValue) {
+        return firstValue + secondValue;
+    }
+}, {
+    id: 'subtraction',
+    isPressed: null,
+    subtraction(firstValue, secondValue) {
+        return firstValue - secondValue;
+    }
+}, {
+    id: 'multiplication',
+    isPressed: null,
+    multiplication(firstValue, secondValue) {
+        return firstValue*secondValue;
+    }
+}, {
+    id: 'division',
+    isPressed: null,
+    division(firstValue, secondValue) {
+        return firstValue/secondValue;
+    }
+}, {
+    id: 'evaluation',
+    isPressed: null,
+    evaluation() {
+    }
+},
+];
+// const operations = {
+//     sum (firstValue, secondValue){
+//         return firstValue+secondValue;
+//     },
+//     subtraction (){},
+//     multiplication (){},
+//     division (){},
+//     evaluation (){
 
-const operations = {
-    sum (firstValue, secondValue){
-        return firstValue+secondValue;
-    },
-    subtraction (){},
-    multiplication (){},
-    division (){},
-    evaluation (){},
-}
-
-// function operator (buttonId, firstValue, secondValue){
-//     if(buttonId == 'sum'){
-//         sumResult = operations.sum(firstValue, secondValue);
-//         console.log(sumResult);
-//         return sumResult;
-//     }
-    
+//     },
 // }
+
+function operator (id){
+if(id == 'sum'){
+    firstValue = +firstValue;
+    result = operations[0].sum(result, firstValue);
+    firstValue = '';
+    displayNumber.textContent = `${result}`
+    operations[0].isPressed = false;
+} 
+};
+    
