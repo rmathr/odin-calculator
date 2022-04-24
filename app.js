@@ -93,17 +93,24 @@ const operations = [{
     id: 'evaluation',
     isPressed: null,
     evaluation() {   
-        if (operations[0].isPressed === true) {
-            return operator('sum');
-        } else if (operations[1].isPressed === true) {
-            return operator('subtraction');
-        } else if (operations[2].isPressed === true) {
-            return operator('multiplication');
-        } else if (operations[3].isPressed === true) {
-            return operator('division');
-        } else {
-            console.log('Nothing happened.');
-        }
+        // if (operations[0].isPressed === true) {
+        //     return operator('sum');
+        // } else if (operations[1].isPressed === true) {
+        //     return operator('subtraction');
+        // } else if (operations[2].isPressed === true) {
+        //     return operator('multiplication');
+        // } else if (operations[3].isPressed === true) {
+        //     return operator('division');
+        // } else {
+        //     console.log('Nothing happened.');
+        // }
+        operations.filter( pressed => {
+            if(pressed.isPressed === true){
+                //console.log(`button pressed: ${pressed.id}`);
+                return operator(`${pressed.id}`);
+            }
+        })
+    
     }
 },
 ];
@@ -113,14 +120,14 @@ const operations = [{
 
 
 function defineOperationLogic(operation, operationsArrayId, button) {
-    console.log(`${button.id}`);
+    console.log(`${operations[operationsArrayId].isPressed}`);
     if (result != '' && firstValue != '') {
         operator(operation);
     } else if (result != '' && firstValue == '') {
         result = result;
         console.log(`result: ${result}`);
         firstValue = '';
-        operations[operationsArrayId].isPressed = false;
+        operations[operationsArrayId].isPressed = true;
     } else {
         result = +firstValue;
         console.log(`result: ${result}`);
