@@ -18,6 +18,10 @@ function handleNumericButtons (id){
         () => {
             //console.log(button.value);
             firstValue += button.value;
+            // if(operations[5].isPressed === true){
+            //     firstValue = operations[5].changeSign(+firstValue);
+            // }
+            
             displayNumber.textContent = `${firstValue}`
             
             console.log(firstValue);
@@ -47,8 +51,7 @@ function handleOperatorButtons (id){
                     operations[4].evaluation()
                     defineOperationLogic('division', 3, button);
                 break;
-             case 'equal': 
-                    
+             case 'equal':  
                     operations[4].evaluation();
              //  if(operations[0].isPressed === true){
             //     operator('sum');  
@@ -56,6 +59,9 @@ function handleOperatorButtons (id){
             //         operator('subtraction');  
             //     }
                 break;
+            //  case 'changeSign':
+            //  operator('changeSign');       
+            //  //operations[4].evaluation();
             }
         })
     })
@@ -92,7 +98,7 @@ const operations = [{
 }, {
     id: 'evaluation',
     isPressed: null,
-    evaluation() {   
+    evaluation() {
         // if (operations[0].isPressed === true) {
         //     return operator('sum');
         // } else if (operations[1].isPressed === true) {
@@ -104,15 +110,39 @@ const operations = [{
         // } else {
         //     console.log('Nothing happened.');
         // }
-        operations.filter( pressed => {
-            if(pressed.isPressed === true){
+        operations.filter(pressed => {
+            if (pressed.isPressed === true) {
                 //console.log(`button pressed: ${pressed.id}`);
                 return operator(`${pressed.id}`);
             }
         })
-    
+
     }
-},
+}, 
+// {
+//     id: 'changeSign',
+//     isPressed: null,
+//     changeSign(firstValue, result) {
+//         if (result != '' && firstValue != ''){
+//             operations[5].isPressed = false;
+//             displayNumber.textContent = `${firstValue}`;
+//             operations[4].evaluation();
+//             return firstValue * (-1);
+//         } else if (result != '' && firstValue == ''){
+//             operations[5].isPressed = false;
+//             displayNumber.textContent = `${result}`;
+//             operations[4].evaluation();
+//             return result * (-1);
+//         } else if (result == '' && firstValue == !''){
+//             operations[5].isPressed = false;
+//             displayNumber.textContent = `${result}`;
+//             operations[4].evaluation();
+//             return firstValue * (-1);
+//         } else {
+//             return operations[5].isPressed = true;
+//         }
+//     }
+// },
 ];
 
 
@@ -134,11 +164,6 @@ function defineOperationLogic(operation, operationsArrayId, button) {
         firstValue = '';
         operations[operationsArrayId].isPressed = true;
     }
-    operations.filter( pressed => {
-        if(pressed.isPressed === true){
-            console.log(`button pressed: ${pressed.id}`);
-        }
-    })
 }
 
 function operator(id) {
@@ -171,6 +196,13 @@ function operator(id) {
             displayNumber.textContent = `${result}`
             operations[3].isPressed = false;
             break;
+        // case 'changeSign':
+        //     firstValue = firstValue;
+        //     result = result;
+            
+           
+            
+        //     break;
     }
 };
 

@@ -9,3 +9,51 @@
     height: 30px;
     background-color: silver;
 }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.calculator-external {
+    width: 30%;
+    height: 45%;
+    margin: 0 auto;
+    background-color: darkblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display-info{
+    margin: 12px 0;
+}
+
+.general-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    height: 70%;
+}
+
+.general-buttons button {
+    width: 2.5rem;
+    height: 2rem;
+    
+}
+
+.numeric-buttons {
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: space-around;
+    flex-wrap: wrap;
+    /* padding: 0 15px; */
+}
+
+.operations-buttons{
+    height: 40%;
+}
