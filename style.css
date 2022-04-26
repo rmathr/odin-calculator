@@ -8,6 +8,9 @@
     width: 200px;
     height: 30px;
     background-color: silver;
+    margin: 12px 0;
+    display: flex;
+    
 }
 
 body {
@@ -25,10 +28,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.display-info{
-    margin: 12px 0;
 }
 
 .general-buttons {

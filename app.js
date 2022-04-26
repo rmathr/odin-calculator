@@ -1,4 +1,5 @@
 const displayNumber = document.getElementById('displayNumber');
+const displaySign = document.getElementById('displaySign');
 
 
 const numericButtons = document.querySelectorAll('.numeric-buttons button');
@@ -17,11 +18,7 @@ function handleNumericButtons (id){
         button.addEventListener('click', 
         () => {
             //console.log(button.value);
-            firstValue += button.value;
-            // if(operations[5].isPressed === true){
-            //     firstValue = operations[5].changeSign(+firstValue);
-            // }
-            
+            firstValue += button.value;          
             displayNumber.textContent = `${firstValue}`
             
             console.log(firstValue);
@@ -29,6 +26,7 @@ function handleNumericButtons (id){
         );
     });
 }
+
 
 function handleOperatorButtons (id){
     id.forEach( button => {
@@ -53,20 +51,30 @@ function handleOperatorButtons (id){
                 break;
              case 'equal':  
                     operations[4].evaluation();
-             //  if(operations[0].isPressed === true){
-            //     operator('sum');  
-            //     } else if (operations[1].isPressed === true){
-            //         operator('subtraction');  
-            //     }
                 break;
-            //  case 'changeSign':
-            //  operator('changeSign');       
-            //  //operations[4].evaluation();
+             case 'changeSign':
+                // if(firstValue == ''){
+                //     operations[5].isPressed = true;
+                //     displayNumber.textContent = `${button.value}`
+                // } 
+                handleSign(button);
+                break;
             }
         })
     })
 };
 
+function handleSign(button){
+    if(firstValue == '' && result == ''){
+        operations[5].isPressed = true;
+        displaySign.textContent = `${button.value}`
+    } else if (firstValue != '' && result == ''){
+        operator('changeSign');
+    } else if(firstValue == '' && result != '') {
+        result = operations[5].changeSign(result);
+        displayNumber.textContent = `${result}`;
+    }
+}
 
 
 
@@ -99,17 +107,6 @@ const operations = [{
     id: 'evaluation',
     isPressed: null,
     evaluation() {
-        // if (operations[0].isPressed === true) {
-        //     return operator('sum');
-        // } else if (operations[1].isPressed === true) {
-        //     return operator('subtraction');
-        // } else if (operations[2].isPressed === true) {
-        //     return operator('multiplication');
-        // } else if (operations[3].isPressed === true) {
-        //     return operator('division');
-        // } else {
-        //     console.log('Nothing happened.');
-        // }
         operations.filter(pressed => {
             if (pressed.isPressed === true) {
                 //console.log(`button pressed: ${pressed.id}`);
@@ -119,30 +116,13 @@ const operations = [{
 
     }
 }, 
-// {
-//     id: 'changeSign',
-//     isPressed: null,
-//     changeSign(firstValue, result) {
-//         if (result != '' && firstValue != ''){
-//             operations[5].isPressed = false;
-//             displayNumber.textContent = `${firstValue}`;
-//             operations[4].evaluation();
-//             return firstValue * (-1);
-//         } else if (result != '' && firstValue == ''){
-//             operations[5].isPressed = false;
-//             displayNumber.textContent = `${result}`;
-//             operations[4].evaluation();
-//             return result * (-1);
-//         } else if (result == '' && firstValue == !''){
-//             operations[5].isPressed = false;
-//             displayNumber.textContent = `${result}`;
-//             operations[4].evaluation();
-//             return firstValue * (-1);
-//         } else {
-//             return operations[5].isPressed = true;
-//         }
-//     }
-// },
+{
+    id: 'changeSign',
+    isPressed: null,
+    changeSign(value) {
+        displaySign.textContent = '';
+        return value * (-1);
+}},
 ];
 
 
@@ -196,46 +176,12 @@ function operator(id) {
             displayNumber.textContent = `${result}`
             operations[3].isPressed = false;
             break;
-        // case 'changeSign':
-        //     firstValue = firstValue;
-        //     result = result;
-            
-           
-            
-        //     break;
+        case 'changeSign':
+            firstValue = +firstValue;
+            result = operations[5].changeSign(firstValue);
+            firstValue = '';
+            displayNumber.textContent = `${result}`;
+            operations[5].isPressed = false;
+            break;
     }
 };
-
-
-    
-// function handleOperatorButtons (id){
-//     id.forEach( button => {
-//         button.addEventListener('click',
-//         () => {
-//             if (button.id == 'sum'){
-//                 console.log(`${button.id}`);  
-//                 if(result != '' && firstValue != ''){
-//                     operator('sum');     
-//                 } else if(result != '' && firstValue == ''){
-//                     result = result;
-//                     firstValue = '';
-//                     operations[0].isPressed = false;
-//                 } else {
-//                     result = +firstValue;
-//                     firstValue = '';
-//                     operations[0].isPressed = true; 
-//                 }
-//             } else if (button.id == 'equal'){
-//                     if(operations[0].isPressed === true){
-//                     operator('sum');  
-//                     }
-//             } else if (button.value == 'x') {
-//                 operator('x');
-//             } else if (button.value == '/') {
-//                 operator('/');
-//             } else {
-//                 operator('=');
-//             }
-//         })
-//     })
-// };
