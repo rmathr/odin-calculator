@@ -49,6 +49,10 @@ function handleOperatorButtons (id){
                     operations[4].evaluation()
                     defineOperationLogic('division', 3, button);
                 break;
+             case 'pow':
+                    // operations[4].evaluation()
+                    // defineOperationLogic('pow', 6, button);
+                break;   
              case 'equal':  
                     operations[4].evaluation();
                 break;
@@ -135,6 +139,13 @@ const operations = [{
         return value * (-1);
     }
 },
+{
+    id: 'pow',
+    isPressed: null,
+    pow(value){
+        return value**2;
+    }
+},
 ];
 
 
@@ -194,6 +205,13 @@ function operator(id) {
             firstValue = '';
             displayNumber.textContent = `${result}`;
             operations[5].isPressed = false;
+            break;
+        case 'pow':
+            firstValue = +firstValue;
+            result = operations[6].pow(firstValue);
+            firstValue = '';
+            displayNumber.textContent = `${result}`;
+            operations[6].isPressed = false;
             break;
     }
 };
