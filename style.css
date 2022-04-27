@@ -10,7 +10,15 @@
     background-color: silver;
     margin: 12px 0;
     display: flex;
-    
+    flex-direction: row-reverse;
+}
+
+#displayNumber {
+    order: 1;
+}
+
+#displaySign{
+    order: 2;
 }
 
 body {

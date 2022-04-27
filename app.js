@@ -53,12 +53,18 @@ function handleOperatorButtons (id){
                     operations[4].evaluation();
                 break;
              case 'changeSign':
-                // if(firstValue == ''){
-                //     operations[5].isPressed = true;
-                //     displayNumber.textContent = `${button.value}`
-                // } 
-                handleSign(button);
+                    handleSign(button);
                 break;
+             case 'erase':
+             if(firstValue != ''){
+                firstValue = firstValue.slice(0,-1);
+                displayNumber.textContent = `${firstValue}`;
+             }       
+                break;
+             case 'clear':
+                    firstValue = '';
+                    result = '';
+                    displayNumber.textContent = '';
             }
         })
     })
@@ -66,8 +72,13 @@ function handleOperatorButtons (id){
 
 function handleSign(button){
     if(firstValue == '' && result == ''){
-        operations[5].isPressed = true;
-        displaySign.textContent = `${button.value}`
+        if (!operations[5].isPressed) {
+            operations[5].isPressed = true;
+            displaySign.textContent = `${button.value}`
+        } else {
+            operations[5].isPressed = false;
+            displaySign.textContent = '';
+        } 
     } else if (firstValue != '' && result == ''){
         operator('changeSign');
     } else if(firstValue == '' && result != '') {
@@ -115,14 +126,15 @@ const operations = [{
         })
 
     }
-}, 
+},
 {
     id: 'changeSign',
     isPressed: null,
     changeSign(value) {
         displaySign.textContent = '';
         return value * (-1);
-}},
+    }
+},
 ];
 
 
@@ -185,3 +197,4 @@ function operator(id) {
             break;
     }
 };
+
