@@ -9,6 +9,7 @@ let result = '';
 let firstSavedValue = '';
 let sumResult;
 let sumPressed;
+let roundResult = '';
 
 handleNumericButtons(numericButtons);
 handleOperatorButtons(operationsButtons);
@@ -35,24 +36,31 @@ function handleOperatorButtons (id){
             switch (button.id){
                 case 'sum':
                     operations[4].evaluation()
-                    defineOperationLogic('sum', 0, button);
+                    defineBasicOperationLogic('sum', 0, button);
                 break;
              case 'subtraction':
                     operations[4].evaluation()
-                    defineOperationLogic('subtraction', 1, button);
+                    defineBasicOperationLogic('subtraction', 1, button);
                 break;    
              case 'multiplication':
                     operations[4].evaluation()
-                    defineOperationLogic('multiplication', 2, button);
+                    defineBasicOperationLogic('multiplication', 2, button);
                 break;
              case 'division':
                     operations[4].evaluation()
-                    defineOperationLogic('division', 3, button);
+                    defineBasicOperationLogic('division', 3, button);
                 break;
              case 'pow':
-                    // operations[4].evaluation()
-                    // defineOperationLogic('pow', 6, button);
-                break;   
+                    operations[4].evaluation()
+                    handlePow();
+                break;
+             case 'squareRoot':
+                    operations[4].evaluation()
+                    handleSqrt();
+                break;
+             case 'dot':
+                    defineDecimalNumber(); 
+                break;       
              case 'equal':  
                     operations[4].evaluation();
                 break;
@@ -87,12 +95,32 @@ function handleSign(button){
         operator('changeSign');
     } else if(firstValue == '' && result != '') {
         result = operations[5].changeSign(result);
-        displayNumber.textContent = `${result}`;
+        // displayNumber.textContent = `${result}`;
+        displayNumber.textContent = `${roundDisplayResult(result)}`;
     }
 }
 
+function handlePow(){
+    if (firstValue != '' && result == ''){
+        operator('pow');
+    }  else if (firstValue == '' && result != ''){
+        result = operations[6].pow(result);
+        displayNumber.textContent = `${roundDisplayResult(result)}`;
+        // displayNumber.textContent = `${result}`;
+        operations[6].isPressed = false;
+    }
+}
 
-
+function handleSqrt(){
+    if (firstValue != '' && result == ''){
+        operator('squareRoot');
+    }  else if (firstValue == '' && result != ''){
+        result = operations[7].squareRoot(result);
+        displayNumber.textContent = `${roundDisplayResult(result)}`;
+        // displayNumber.textContent = `${result}`;
+        operations[6].isPressed = false;
+    }
+}
 
 const operations = [{
     id: 'sum',
@@ -116,6 +144,9 @@ const operations = [{
     id: 'division',
     isPressed: null,
     division(firstValue, secondValue) {
+        // if (secondValue == 0){
+        //     return "ERROR, CAN'T DIVIDE BY ZERO."
+        // } 
         return firstValue / secondValue;
     }
 }, {
@@ -146,13 +177,25 @@ const operations = [{
         return value**2;
     }
 },
+{
+    id: 'squareRoot',
+    isPressed: null,
+    squareRoot(value){
+        return value**0.5;
+    }
+},
 ];
 
+function roundDisplayResult(result){
+    if(result != ''){
+       roundResult = Math.round((result + Number.EPSILON) * 100) / 100;
+       return roundResult; 
+    }
+}
 
 
 
-
-function defineOperationLogic(operation, operationsArrayId, button) {
+function defineBasicOperationLogic(operation, operationsArrayId, button) {
     console.log(`${operations[operationsArrayId].isPressed}`);
     if (result != '' && firstValue != '') {
         operator(operation);
@@ -169,50 +212,76 @@ function defineOperationLogic(operation, operationsArrayId, button) {
     }
 }
 
+
+function defineDecimalNumber(){
+    if (firstValue == ''){
+        firstValue = '0.';
+        displayNumber.textContent = `${firstValue}`;
+    } else if (firstValue != '' && !firstValue.includes('.')){
+        firstValue += '.';
+        displayNumber.textContent = `${firstValue}`;
+    }
+}
+
+
+
 function operator(id) {
     switch (id) {
         case 'sum':
             firstValue = +firstValue;
             result = operations[0].sum(result, firstValue);
             firstValue = '';
-            displayNumber.textContent = `${result}`
+            displayNumber.textContent = `${roundDisplayResult(result)}`
             operations[0].isPressed = false;
             break;
         case 'subtraction':
             firstValue = +firstValue;
             result = operations[1].subtraction(result, firstValue);
             firstValue = '';
-            displayNumber.textContent = `${result}`
+            displayNumber.textContent = `${roundDisplayResult(result)}`
             operations[1].isPressed = false;
             break;
         case 'multiplication':
             firstValue = +firstValue;
             result = operations[2].multiplication(result, firstValue);
             firstValue = '';
-            displayNumber.textContent = `${result}`
+            displayNumber.textContent = `${roundDisplayResult(result)}`
             operations[2].isPressed = false;
             break;
         case 'division':
             firstValue = +firstValue;
             result = operations[3].division(result, firstValue);
             firstValue = '';
-            displayNumber.textContent = `${result}`
-            operations[3].isPressed = false;
+            // if (result == "ERROR, CAN'T DIVIDE BY ZERO."){
+            //     displayNumber.textContent = `${result}`
+            //     result = 0;
+            // } else {}
+                displayNumber.textContent = `${roundDisplayResult(result)}`
+                operations[3].isPressed = false;
+            
             break;
         case 'changeSign':
             firstValue = +firstValue;
             result = operations[5].changeSign(firstValue);
             firstValue = '';
-            displayNumber.textContent = `${result}`;
+            displayNumber.textContent = `${roundDisplayResult(result)}`;
             operations[5].isPressed = false;
             break;
         case 'pow':
             firstValue = +firstValue;
             result = operations[6].pow(firstValue);
             firstValue = '';
-            displayNumber.textContent = `${result}`;
+            displayNumber.textContent = `${roundDisplayResult(result)}`;
             operations[6].isPressed = false;
+            break;
+        case 'squareRoot':
+            firstValue = +firstValue;
+            result = operations[7].squareRoot(firstValue);
+            firstValue = '';
+            displayNumber.textContent = `${roundDisplayResult(result)}`;
+            operations[7].isPressed = false;
             break;
     }
 };
+
 
