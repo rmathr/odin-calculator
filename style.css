@@ -5,7 +5,7 @@
 }
 
 .display-info {
-    width: 200px;
+    width: 204px;
     height: 30px;
     background-color: silver;
     margin: 12px 0;
@@ -47,24 +47,80 @@ body {
 }
 
 .general-buttons button {
-    width: 2.5rem;
-    height: 2rem;
+    width: 36px;
+    height: 32px;
     
 }
 
-.numeric-buttons {
-    height: 60%;
+ .numeric-buttons {
     display: flex;
-    justify-content: center;
-    align-items: space-around;
     flex-wrap: wrap;
-    /* padding: 0 15px; */
-}
+    justify-content: space-between;
+ } 
+
 
 .operations-buttons{
     height: 40%;
 }
 
+.solar-charger {
+    width: 100px;
+    height: 30px;
+    background-color: brown;
+}
+
+
+.upper-container{
+    width: 204px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.upper-container .operations-buttons{
+    display: flex;
+    width: 78px;
+    justify-content: space-between;
+}
+
+.bottom-container{
+    width: 204px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .fa-circle{
     font-size: 5px;
+}
+
+.left-container{
+    width: 120px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.right-container {
+    width: 84px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.right-container button:nth-child(odd){
+    margin-left: 6px;
+}
+
+#equal{
+    flex-grow: 2;
+}
+
+.botton-left-container{
+    display: flex;
+    width: 120px;
+    justify-content: space-between;
+}
+
+.dot-changeSign {
+    display: flex;
+    width: 78px;
+    justify-content: space-between;
 }
