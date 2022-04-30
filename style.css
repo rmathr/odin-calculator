@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -6,11 +8,15 @@
 
 .display-info {
     width: 204px;
-    height: 30px;
-    background-color: silver;
-    margin: 12px 0;
+    height: 50px;
+    background-color: #bdf0a6;
+    margin: 18px 0;
     display: flex;
     flex-direction: row-reverse;
+    border-radius: 7px;
+    font-family: 'Allerta Stencil', sans-serif;
+    font-size: 25px;
+    color: #00020e;
 }
 
 #displayNumber {
@@ -26,30 +32,44 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #f3767c;
 }
 
 .calculator-external {
-    width: 30%;
-    height: 50%;
+    width: 240px;
+    height: 280px;
     margin: 0 auto;
-    background-color: darkblue;
+    background-color: rgb(36, 36, 37);
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 7px;
 }
 
 .general-buttons {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 80%;
+    justify-content: space-around;
+    /* width: 80%; */
     height: 70%;
+    margin-bottom: 12px;
 }
 
 .general-buttons button {
     width: 36px;
     height: 32px;
-    
+    margin-top: 4px;
+    border: none;
+    border-radius: 2px;
+    background-color: #868596;
+    color: #EFEFEF;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: 'Allerta Stencil', sans-serif;
+}
+
+.right-container button{
+    background-color: #48494e;
 }
 
  .numeric-buttons {
@@ -65,21 +85,42 @@ body {
 
 .solar-charger {
     width: 100px;
-    height: 30px;
-    background-color: brown;
+    height: 32px;
+    background-color: #ac5c4c;
+    border-radius: 3px;
+    display: flex;
 }
 
+.square {
+    width: 25px;
+    height: 32px;
+    
+}
+
+.square:nth-child(2), .square:nth-child(3){
+    border-left: 1px solid #c17463;
+    border-right: 1px solid #c17463;
+}
 
 .upper-container{
     width: 204px;
+    height: 32px;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
 }
 
 .upper-container .operations-buttons{
     display: flex;
     width: 78px;
+    margin-top: 0;
     justify-content: space-between;
+}
+
+#deleteButtons button{
+    margin-top: 0;
+    background-color: #86467b;
+    color: #EFEFEF;
 }
 
 .bottom-container{
@@ -111,6 +152,8 @@ body {
 
 #equal{
     flex-grow: 2;
+    background-color: rgb(255, 94, 0);
+    color: #EFEFEF;
 }
 
 .botton-left-container{
