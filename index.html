@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="app.js" defer></script>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/lcd" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Calculator</title>
@@ -12,15 +13,20 @@
 <body>
     <main class="calculator-external">
         <div class="display-info">
-            <p id="displaySign"></p>
-            <p id="displayNumber"></p>
+            <div class="display-operations" id="displayOperations">
+                <p id="displaySign"></p>
+                <p id="displayNumber"></p>
+                <p id="displayOpSymbol"></p>
+                <p id="displayNumber2"></p>
+            </div>
+            <p id="displayResult"></p>
         </div>
     
         <section class="general-buttons">
             <div class="upper-container">
                 <div class="operations-buttons" id="deleteButtons"> 
-                    <button id="erase" value="erase"><i class="fa fa-backspace"></i></button>
                     <button id="clear" value="clear">AC</button>
+                    <button id="erase" value="erase"><i class="fa fa-backspace"></i></button>
                 </div>
                 <div class="solar-charger">
                     <div class="square"></div> 

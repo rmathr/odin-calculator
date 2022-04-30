@@ -1,6 +1,8 @@
 const displayNumber = document.getElementById('displayNumber');
 const displaySign = document.getElementById('displaySign');
-
+const displayResult = document.getElementById('displayResult');
+const displayOpSymbol = document.getElementById('displayOpSymbol');
+const displayNumber2 = document.getElementById('displayNumber2');
 
 const numericButtons = document.querySelectorAll('.numeric-buttons button');
 const operationsButtons = document.querySelectorAll('.operations-buttons button');
@@ -8,7 +10,7 @@ let firstValue = '';
 let result = '';
 let firstSavedValue = '';
 let sumResult;
-let sumPressed;
+let opPressed;
 let roundResult = '';
 
 handleNumericButtons(numericButtons);
@@ -20,8 +22,8 @@ function handleNumericButtons (id){
         () => {
             //console.log(button.value);
             firstValue += button.value;          
-            displayNumber.textContent = `${firstValue}`
-            
+            // displayNumber.textContent = `${firstValue}`
+            defineDisplayLogic(firstValue,result);
             console.log(firstValue);
         }
         );
@@ -35,6 +37,7 @@ function handleOperatorButtons (id){
         () => {
             switch (button.id){
                 case 'sum':
+                    displayOpSymbol.textContent = `${button.value}`
                     operations[4].evaluation()
                     defineBasicOperationLogic('sum', 0, button);
                 break;
@@ -77,6 +80,7 @@ function handleOperatorButtons (id){
                     firstValue = '';
                     result = '';
                     displayNumber.textContent = '';
+                    displayResult.textContent = '';
             }
         })
     })
@@ -122,27 +126,48 @@ function handleSqrt(){
     }
 }
 
+
+
+function defineDisplayLogic(firstValue, result){
+    if (result == ''){
+        displayResult.textContent = `${firstValue}`
+    } else {
+        operations.filter( pressed => {
+            if (pressed.isPressed === true){
+                opPressed = `${pressed.value}`;
+            }
+        })
+        displayResult.textContent = `${result} ${opPressed} ${firstValue}`
+    }
+    
+}
+
+
 const operations = [{
     id: 'sum',
     isPressed: null,
+    value: '+',
     sum(firstValue, secondValue) {
         return firstValue + secondValue;
     }
 }, {
     id: 'subtraction',
     isPressed: null,
+    value: '-',
     subtraction(firstValue, secondValue) {
         return firstValue - secondValue;
     }
 }, {
     id: 'multiplication',
     isPressed: null,
+    value: 'x',
     multiplication(firstValue, secondValue) {
         return firstValue * secondValue;
     }
 }, {
     id: 'division',
     isPressed: null,
+    value: '/',
     division(firstValue, secondValue) {
         // if (secondValue == 0){
         //     return "ERROR, CAN'T DIVIDE BY ZERO."
@@ -152,6 +177,7 @@ const operations = [{
 }, {
     id: 'evaluation',
     isPressed: null,
+    value: '=',
     evaluation() {
         operations.filter(pressed => {
             if (pressed.isPressed === true) {
@@ -165,6 +191,7 @@ const operations = [{
 {
     id: 'changeSign',
     isPressed: null,
+    value: null,
     changeSign(value) {
         displaySign.textContent = '';
         return value * (-1);
@@ -173,6 +200,7 @@ const operations = [{
 {
     id: 'pow',
     isPressed: null,
+    value: null,
     pow(value){
         return value**2;
     }
@@ -180,11 +208,13 @@ const operations = [{
 {
     id: 'squareRoot',
     isPressed: null,
+    value: null,
     squareRoot(value){
         return value**0.5;
     }
 },
 ];
+
 
 function roundDisplayResult(result){
     if(result != ''){
@@ -231,7 +261,9 @@ function operator(id) {
             firstValue = +firstValue;
             result = operations[0].sum(result, firstValue);
             firstValue = '';
-            displayNumber.textContent = `${roundDisplayResult(result)}`
+            // displayNumber.textContent = `${roundDisplayResult(result)}`
+            displayResult.textContent = `${roundDisplayResult(result)}`
+            displayOpSymbol.textContent = '';
             operations[0].isPressed = false;
             break;
         case 'subtraction':
