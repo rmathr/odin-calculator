@@ -37,23 +37,30 @@ function handleOperatorButtons (id){
         () => {
             switch (button.id){
                 case 'sum':
-                    // displayOpSymbol.textContent = `${button.value}`
+                    
+                // displayOpSymbol.textContent = `${button.value}`
                     operations[4].evaluation()
+                    defineDisplayLogic(firstValue, result)
                     defineBasicOperationLogic('sum', 0, button);
                 break;
              case 'subtraction':
                     operations[4].evaluation()
+                    defineDisplayLogic(firstValue, result)
                     defineBasicOperationLogic('subtraction', 1, button);
                 break;    
              case 'multiplication':
-                           
-                    operations[4].evaluation()
-                    defineDisplayLogic(firstValue, result)
-                    defineBasicOperationLogic('multiplication', 2, button);
+                     if(operations[2].isPressed !== true){
+                        operations[4].evaluation()
+                        defineDisplayLogic(firstValue, result)
+                        defineBasicOperationLogic('multiplication', 2, button);
+                     }      
                 break;
              case 'division':
-                    operations[4].evaluation()
-                    defineBasicOperationLogic('division', 3, button);
+                    if (operations[3].isPressed !== true){
+                        operations[4].evaluation()
+                        defineDisplayLogic(firstValue, result)
+                        defineBasicOperationLogic('division', 3, button);
+                    }
                 break;
              case 'pow':
                     operations[4].evaluation()
@@ -70,12 +77,12 @@ function handleOperatorButtons (id){
                     operations[4].evaluation();
                 break;
              case 'changeSign':
-                    handleSign(button);
+                    handleSign();
                 break;
              case 'erase':
              if(firstValue != ''){
                 firstValue = firstValue.slice(0,-1);
-                displayNumber.textContent = `${firstValue}`;
+                displayResult.textContent = `${firstValue}`;
              }       
                 break;
              case 'clear':
@@ -84,7 +91,7 @@ function handleOperatorButtons (id){
                     displayNumber.textContent = '';
                     displayResult.textContent = '';
             }
-            if(button.id != 'changeSign'){
+            if(button.id != 'changeSign' && button.id != 'dot'){
                 operations.filter(pressed => {
                     if (pressed.isPressed === true) {
                         //console.log(`button pressed: ${pressed.id}`);
@@ -97,23 +104,40 @@ function handleOperatorButtons (id){
     })
 };
 
-function handleSign(button){
-    if(firstValue == '' && result == ''){
-        if (!operations[5].isPressed) {
-            operations[5].isPressed = true;
-            displayResult.textContent = `${button.value}`
-        } else {
-            operations[5].isPressed = false;
-            displayResult.textContent = '';
-        } 
-    } else if (firstValue != '' && result == ''){
-        operator('changeSign');
-    } else if(firstValue == '' && result != '') {
-        result = operations[5].changeSign(result);
-        // displayNumber.textContent = `${result}`;
-        displayNumber.textContent = `${roundDisplayResult(result)}`;
+
+
+function handleSign(){
+    // if(firstValue != '' ) 
+    
+    
+    if (!firstValue.includes('-')){
+        firstValue = '-' + firstValue;
+        defineDisplayLogic(firstValue, result);
+        // displayResult.textContent = `${firstValue}`;       
+    } else {
+        firstValue = firstValue.slice(1);
+        defineDisplayLogic(firstValue, result)
+        // displayResult.textContent = `${firstValue}`;
     }
+        
 }
+// function handleSign(button){
+//     if(firstValue == '' && result == ''){
+//         if (!operations[5].isPressed) {
+//             operations[5].isPressed = true;
+//             displayResult.textContent = `${button.value}`
+//         } else {
+//             operations[5].isPressed = false;
+//             displayResult.textContent = '';
+//         } 
+//     } else if (firstValue != '' && result == ''){
+//         operator('changeSign');
+//     } else if(firstValue == '' && result != '') {
+//         result = operations[5].changeSign(result);
+//         // displayNumber.textContent = `${result}`;
+//         displayNumber.textContent = `${roundDisplayResult(result)}`;
+//     }
+// }
 
 function handlePow(){
     if (firstValue != '' && result == ''){
@@ -137,16 +161,19 @@ function handleSqrt(){
     }
 }
 
-
+function defineDecimalNumber(){
+    if (firstValue == ''){
+        firstValue = '0.';
+        displayResult.textContent = `${firstValue}`;
+    } else if (firstValue != '' && !firstValue.includes('.')){
+        firstValue += '.';
+        displayResult.textContent = `${firstValue}`;
+    }
+}
 
 function defineDisplayLogic(firstValue, result){
     if (result == ''){
-        if(operations[5].isPressed = true){
-            displayResult.textContent = `${operations[5].value} ${firstValue}`
-        } else {
             displayResult.textContent = `${firstValue}`
-        }
-        
     } else {
         // operations.filter( pressed => {
         //     if (pressed.isPressed === true){
@@ -198,7 +225,7 @@ const operations = [{
         operations.filter(pressed => {
             if (pressed.isPressed === true) {
                 //console.log(`button pressed: ${pressed.id}`);
-                opPressed = `${pressed.value}`;
+                // opPressed = `${pressed.value}`;
                 return operator(`${pressed.id}`);
             }
         })
@@ -234,9 +261,15 @@ const operations = [{
 
 
 function roundDisplayResult(result){
-    if(result != ''){
+    if(result != '' && result !== 0){
        roundResult = Math.round((result + Number.EPSILON) * 100) / 100;
+       if(roundResult/1e14 > 1){
+           roundResult = roundResult.toExponential(2);
+       }
        return roundResult; 
+    } else {
+        roundResult = 0;
+        return roundResult;
     }
 }
 
@@ -260,61 +293,65 @@ function defineBasicOperationLogic(operation, operationsArrayId, button) {
 }
 
 
-function defineDecimalNumber(){
-    if (firstValue == ''){
-        firstValue = '0.';
-        displayNumber.textContent = `${firstValue}`;
-    } else if (firstValue != '' && !firstValue.includes('.')){
-        firstValue += '.';
-        displayNumber.textContent = `${firstValue}`;
-    }
-}
+
 
 
 
 function operator(id) {
     switch (id) {
         case 'sum':
-            firstValue = +firstValue;
-            result = operations[0].sum(result, firstValue);
-            firstValue = '';
-            // displayNumber.textContent = `${roundDisplayResult(result)}`
-            displayResult.textContent = `${roundDisplayResult(result)}`
+            if (firstValue == ''){
+                result = result;
+                firstValue = '';
+            } else {
+                firstValue = +firstValue;
+                result = operations[0].sum(result, firstValue);
+                firstValue = '';
+            }
+            displayNumber.textContent = `${roundDisplayResult(result)}`
+            // displayResult.textContent = `${roundDisplayResult(result)}`
             displayOpSymbol.textContent = '';
             operations[0].isPressed = false;
             break;
         case 'subtraction':
-            firstValue = +firstValue;
-            result = operations[1].subtraction(result, firstValue);
-            firstValue = '';
+            if (firstValue == ''){
+                result = result;
+                firstValue = '';
+            } else {
+                firstValue = +firstValue;
+                result = operations[1].subtraction(result, firstValue);
+                firstValue = '';
+            }
             displayNumber.textContent = `${roundDisplayResult(result)}`
             operations[1].isPressed = false;
             break;
         case 'multiplication':
-            firstValue = +firstValue;
-            result = operations[2].multiplication(result, firstValue);
-            firstValue = '';
+            if (firstValue == ''){
+                result = result;
+                firstValue = '';
+            } else {
+                firstValue = +firstValue;
+                result = operations[2].multiplication(result, firstValue);
+                firstValue = '';
+            } 
             displayNumber.textContent = `${roundDisplayResult(result)}`
             operations[2].isPressed = false;
             break;
         case 'division':
-            firstValue = +firstValue;
-            result = operations[3].division(result, firstValue);
-            firstValue = '';
+            if (firstValue == ''){
+                result = result;
+                firstValue = '';
+            } else {
+                firstValue = +firstValue;
+                result = operations[3].division(result, firstValue);
+                firstValue = '';
+            }    
             // if (result == "ERROR, CAN'T DIVIDE BY ZERO."){
             //     displayNumber.textContent = `${result}`
             //     result = 0;
             // } else {}
                 displayNumber.textContent = `${roundDisplayResult(result)}`
                 operations[3].isPressed = false;
-            
-            break;
-        case 'changeSign':
-            firstValue = +firstValue;
-            result = operations[5].changeSign(firstValue);
-            firstValue = '';
-            displayNumber.textContent = `${roundDisplayResult(result)}`;
-            operations[5].isPressed = false;
             break;
         case 'pow':
             firstValue = +firstValue;
