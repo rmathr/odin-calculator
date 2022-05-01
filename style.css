@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    font-size: 14px;
+    font-size: 25px;
 }
 
 #displayNumber {
@@ -37,7 +37,8 @@
 
 #displayResult{
     align-self: flex-end;
-    font-size: 25px;
+    font-size: 14px;
+    height: 16px;
 }
 
 body {
@@ -80,6 +81,8 @@ body {
     font-size: 15px;
     font-family: 'Allerta Stencil', sans-serif;
 }
+
+
 
 .right-container button{
     background-color: #48494e;
