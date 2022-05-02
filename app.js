@@ -13,22 +13,36 @@ let sumResult;
 let opPressed = '';
 let roundResult = '';
 
+
 handleNumericButtons(numericButtons);
 handleOperatorButtons(operationsButtons);
+
+
+
 
 function handleNumericButtons (id){
     id.forEach( button => {
         button.addEventListener('click', 
         () => {
+            
+            
+                firstValue += button.value;          
+                // displayNumber.textContent = `${firstValue}`
+                defineDisplayLogic(firstValue,result);
+                console.log(firstValue);
+            
             //console.log(button.value);
-            firstValue += button.value;          
-            // displayNumber.textContent = `${firstValue}`
-            defineDisplayLogic(firstValue,result);
-            console.log(firstValue);
+            
+
+            
+            
+            
         }
         );
     });
 }
+
+
 
 
 function handleOperatorButtons (id){
@@ -49,18 +63,27 @@ function handleOperatorButtons (id){
                     defineBasicOperationLogic('subtraction', 1, button);
                 break;    
              case 'multiplication':
-                     if(operations[2].isPressed !== true){
+                     if(firstValue != ''){
                         operations[4].evaluation()
                         defineDisplayLogic(firstValue, result)
                         defineBasicOperationLogic('multiplication', 2, button);
+                    //  if(operations[2].isPressed !== true){
+                    //     operations[4].evaluation()
+                    //     defineDisplayLogic(firstValue, result)
+                    //     defineBasicOperationLogic('multiplication', 2, button);
                      }      
                 break;
              case 'division':
-                    if (operations[3].isPressed !== true){
+                    if (firstValue != ''){
                         operations[4].evaluation()
                         defineDisplayLogic(firstValue, result)
                         defineBasicOperationLogic('division', 3, button);
                     }
+                    // if (operations[3].isPressed !== true){
+                    //     operations[4].evaluation()
+                    //     defineDisplayLogic(firstValue, result)
+                    //     defineBasicOperationLogic('division', 3, button);
+                    // }
                 break;
              case 'pow':
                     operations[4].evaluation()
@@ -174,12 +197,10 @@ function defineDecimalNumber(){
 function defineDisplayLogic(firstValue, result){
     if (result == ''){
             displayResult.textContent = `${firstValue}`
-    } else {
-        // operations.filter( pressed => {
-        //     if (pressed.isPressed === true){
-        //         opPressed = `${pressed.value}`;
-        //     }
-        // })
+    // } else if (opPressed = ''){
+    //     displayResult.textContent = `${firstValue}`
+    } 
+    else {
         displayResult.textContent = `${result} ${opPressed} ${firstValue}`
     }
     
@@ -258,6 +279,7 @@ const operations = [{
     }
 },
 ];
+
 
 
 function roundDisplayResult(result){
