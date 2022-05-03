@@ -12,6 +12,7 @@ let firstSavedValue = '';
 let sumResult;
 let opPressed = '';
 let roundResult = '';
+let pressingVerif;
 
 
 handleNumericButtons(numericButtons);
@@ -26,13 +27,22 @@ function handleNumericButtons (id){
         () => {
             
             
-                firstValue += button.value;          
-                // displayNumber.textContent = `${firstValue}`
-                defineDisplayLogic(firstValue,result);
-                console.log(firstValue);
+        //         firstValue += button.value;          
+        //         // displayNumber.textContent = `${firstValue}`
+        //         defineDisplayLogic(firstValue,result);
+        //         console.log(firstValue);
             
-            //console.log(button.value);
-            
+        //     //console.log(button.value);
+        operations.some(pressed => {
+            return pressingVerif = pressed.isPressed;
+        })
+        if(result ==''){
+            firstValue += button.value;
+            defineDisplayLogic(firstValue,result);
+        } else if (pressingVerif === true && result !=''){
+            firstValue += button.value;
+            defineDisplayLogic(firstValue,result);
+        }     
 
             
             
@@ -42,7 +52,18 @@ function handleNumericButtons (id){
     });
 }
 
-
+// function verifyOperationCondition(button){
+//     operations.some(pressed => {
+//         return pressingVerif = pressed.isPressed;
+//     })
+//     if(firstValue == '' && result ==''){
+//         firstValue += button.value;
+//         defineDisplayLogic(firstValue,result);
+//     } else if (pressingVerif === true && result !=''){
+//         firstValue += button.value;
+//         defineDisplayLogic(firstValue,result);
+//     }
+// }
 
 
 function handleOperatorButtons (id){
@@ -98,6 +119,7 @@ function handleOperatorButtons (id){
                 break;       
              case 'equal':  
                     operations[4].evaluation();
+                    pressingVerif = false;
                 break;
              case 'changeSign':
                     handleSign();
@@ -199,7 +221,7 @@ function defineDisplayLogic(firstValue, result){
             displayResult.textContent = `${firstValue}`
     // } else if (opPressed = ''){
     //     displayResult.textContent = `${firstValue}`
-    } 
+    }   
     else {
         displayResult.textContent = `${result} ${opPressed} ${firstValue}`
     }
@@ -243,14 +265,20 @@ const operations = [{
     isPressed: null,
     value: '=',
     evaluation() {
-        operations.filter(pressed => {
-            if (pressed.isPressed === true) {
-                //console.log(`button pressed: ${pressed.id}`);
-                // opPressed = `${pressed.value}`;
-                return operator(`${pressed.id}`);
-            }
-        })
-
+        if(firstValue != '' && result == ''){
+            firstValue = +firstValue;
+            result = firstValue;
+            firstValue = '';
+            displayNumber.textContent = `${roundDisplayResult(result)}`; 
+        } else {
+            operations.filter(pressed => {
+                if (pressed.isPressed === true) {
+                    //console.log(`button pressed: ${pressed.id}`);
+                    // opPressed = `${pressed.value}`;
+                    return operator(`${pressed.id}`);
+                }
+            })
+        }
     }
 },
 {
@@ -313,6 +341,7 @@ function defineBasicOperationLogic(operation, operationsArrayId, button) {
         operations[operationsArrayId].isPressed = true;
     }
 }
+
 
 
 
