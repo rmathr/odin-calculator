@@ -189,7 +189,12 @@ function defineDecimalNumber(){
 
 function defineDisplayLogic(firstValue, result){
     if (result == ''){
+        if(firstValue.length > 20){
+            displayResult.textContent = `${firstValue.slice(0,20)}...`; 
+
+        } else {
             displayResult.textContent = `${firstValue}`
+        }      
     }   
     else {
         displayResult.textContent = `${roundDisplayResult(result)} ${opPressed} ${firstValue}`
@@ -241,7 +246,7 @@ const operations = [{
             displayNumber.textContent = `${roundDisplayResult(result)}`; 
         } else {
             operations.filter(pressed => {
-                if (pressed.isPressed === true) {
+                if (pressed.isPressed === true && firstValue != '') {
                     return operator(`${pressed.id}`);
                 }
             })

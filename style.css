@@ -8,7 +8,8 @@
 
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     height: 100vh;
     background-color: #f3767c;
@@ -16,10 +17,10 @@ body {
 
 .display-info {
     width: 204px;
-    height: 50px;
+    height: 70px;
     background-color: #bdf0a6;
-    margin: 18px 0;
-    padding-right: 8px;
+    margin: 8px 0 18px 0;
+    padding: 8px 8px 0 8px;
     display: flex;
     flex-direction: column;
     border-radius: 7px;
@@ -32,7 +33,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 #displayNumber {
@@ -45,26 +46,46 @@ body {
 
 #displayResult{
     align-self: flex-end;
-    font-size: 14px;
-    height: 16px;
+    font-size: 16px;
+    height: 18px;
 }
 
 
 
 .calculator-external {
     width: 240px;
-    height: 280px;
+    height: 320px;
     margin: 0 auto;
     background-color: rgb(36, 36, 37);
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 7px;
+    border-radius: 18px;
 }
 
 
-
+.brand {
+    display: flex;
+    width: 204px;
+    justify-content: space-between;
+    margin-top: 18px;
+    color: white;
+    font-family: 'VTFMisterPixelRegular', sans-serif;
+}
    
+.brand-name{
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    padding-left: 6px;
+}
+
+.calc-model{
+    font-size: 8px;
+    padding-right: 6px;
+    font-style: italic;
+}
+
 
 .general-buttons {
     display: flex;
@@ -72,7 +93,7 @@ body {
     justify-content: space-around;
     /* width: 80%; */
     height: 70%;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
 }
 
 .general-buttons button {
@@ -81,17 +102,24 @@ body {
     margin-top: 4px;
     border: none;
     border-radius: 2px;
-    background-color: #868596;
+    background-color: rgb(134, 133, 150);
     color: #EFEFEF;
     font-weight: 700;
     font-size: 15px;
     font-family: 'Allerta Stencil', sans-serif;
 }
 
-
+.general-buttons button:active {
+    background-color: rgba(134, 133, 150, 0.7);
+    transform: translateY(1px);
+}
 
 .right-container button{
     background-color: #48494e;
+}
+
+.right-container button:active{
+    background-color: rgba(72, 73, 78, 0.7);
 }
 
  .numeric-buttons {
@@ -146,6 +174,10 @@ body {
     color: #EFEFEF;
 }
 
+#deleteButtons button:active{
+    background-color: rgba(134, 70, 123, 0.7);
+}
+
 .bottom-container{
     width: 204px;
     display: flex;
@@ -179,6 +211,10 @@ body {
     color: #EFEFEF;
 }
 
+#equal:active{
+    background-color: rgba(255, 94, 0, 0.7);
+}
+
 .botton-left-container{
     display: flex;
     width: 120px;
@@ -189,4 +225,28 @@ body {
     display: flex;
     width: 78px;
     justify-content: space-between;
+}
+
+.footer{
+    width: 100%;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    background-color: rgba(243, 118, 124, 0.4);
+    color: rgb(36, 36, 37);
+}
+
+.fa-github {
+    margin: 8px;
+    font-size: 10px;
+  }
+
+
+a{
+    text-decoration: none;
+    color: inherit;
 }
