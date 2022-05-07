@@ -12,7 +12,7 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-color: #f3767c;
+    background-color: #00bcd4;
 }
 
 .display-info {
@@ -236,7 +236,7 @@ body {
     font-size: 10px;
     font-weight: bold;
     font-style: italic;
-    background-color: rgba(243, 118, 124, 0.4);
+    background-color: #adf6ff;
     color: rgb(36, 36, 37);
 }
 
