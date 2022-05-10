@@ -180,10 +180,12 @@ function handleSqrt(){
 function defineDecimalNumber(){
     if (firstValue == ''){
         firstValue = '0.';
-        displayResult.textContent = `${firstValue}`;
+        //displayResult.textContent = `${firstValue}`;
+        defineDisplayLogic(firstValue, result);
     } else if (firstValue != '' && !firstValue.includes('.')){
         firstValue += '.';
-        displayResult.textContent = `${firstValue}`;
+        //displayResult.textContent = `${firstValue}`;
+        defineDisplayLogic(firstValue, result);
     }
 }
 
@@ -195,13 +197,18 @@ function defineDisplayLogic(firstValue, result){
         } else {
             displayResult.textContent = `${firstValue}`
         }      
-    }   
-    else {
+    } else {
         displayResult.textContent = `${roundDisplayResult(result)} ${opPressed} ${firstValue}`
     }
-    
 }
 
+function defineDisplayNumberLogic(result){
+    if(result.length > 12){
+        displayNumber.textContent = `${roundDisplayResult(result).slice(0,12)}...`;
+    } else {
+        displayNumber.textContent = `${roundDisplayResult(result)}`;
+    }
+}
 
 const operations = [{
     id: 'sum',
@@ -243,7 +250,8 @@ const operations = [{
             firstValue = +firstValue;
             result = firstValue;
             firstValue = '';
-            displayNumber.textContent = `${roundDisplayResult(result)}`; 
+            //displayNumber.textContent = `${roundDisplayResult(result)}`;
+            defineDisplayNumberLogic(result);
         } else {
             operations.filter(pressed => {
                 if (pressed.isPressed === true && firstValue != '') {
@@ -357,7 +365,8 @@ function operator(id) {
                 result = operations[2].multiplication(result, firstValue);
                 firstValue = '';
             } 
-            displayNumber.textContent = `${roundDisplayResult(result)}`
+            defineDisplayNumberLogic(result);
+            //displayNumber.textContent = `${roundDisplayResult(result)}`
             operations[2].isPressed = false;
             break;
         case 'division':

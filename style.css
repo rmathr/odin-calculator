@@ -38,6 +38,9 @@ body {
 
 #displayNumber {
     order: 1;
+    max-width: 196px;
+    /* overflow-wrap: break-word */
+    /* text-overflow: ellipsis; */
 }
 
 #displaySign{
@@ -48,6 +51,7 @@ body {
     align-self: flex-end;
     font-size: 16px;
     height: 18px;
+    max-width: 196px;
 }
 
 
@@ -236,8 +240,8 @@ body {
     font-size: 10px;
     font-weight: bold;
     font-style: italic;
-    background-color: #adf6ff;
-    color: rgb(36, 36, 37);
+    background-color: #795548;
+    color: #EFEFEF;
 }
 
 .fa-github {
