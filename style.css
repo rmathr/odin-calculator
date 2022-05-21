@@ -52,6 +52,9 @@ body {
     font-size: 16px;
     height: 18px;
     max-width: 196px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 

@@ -293,6 +293,12 @@ const operations = [{
 function roundDisplayResult(result){
     if(result != '' && result !== 0){
        roundResult = Math.round((result + Number.EPSILON) * 100) / 100;
+       if(roundResult < 0){
+        if(roundResult/(1e14*-1) > 1){
+            roundResult = roundResult.toExponential(2);
+            return roundResult;
+        } 
+       } 
        if(roundResult/1e14 > 1){
            roundResult = roundResult.toExponential(2);
        }
